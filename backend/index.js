@@ -24,11 +24,9 @@ app.post("/signup", async (req, res) => {
       },
       { headers: { "private-key": process.env.PRIVATE_KEY } }
     );
-    return res.status(201).json(user.data);
+    return res.status(user.status).json(user.data);
   } catch (error) {
-    return res.status(400).json({
-      message: error,
-    });
+    return res.status(error.response.status).json(error.response.data);
   }
 });
 
@@ -43,11 +41,9 @@ app.post("/login", async (req, res) => {
         "User-Secret": secret,
       },
     });
-    return res.status(200).json(user.data);
+    return res.status(user.status).json(user.data);
   } catch (error) {
-    return res.status(400).json({
-      message: error,
-    });
+    return res.status(error.response.status).json(error.response.data);
   }
 });
 
